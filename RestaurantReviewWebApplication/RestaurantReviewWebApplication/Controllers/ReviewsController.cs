@@ -6,24 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RestaurantReviewWebApplication.DAL;
+using RestaurantReviewWebApplication.DAL.DBO;
+using RestaurantReviewWebApplication.DAL.Repos;
 using RestaurantReviewWebApplication.Models;
 
 namespace RestaurantReviewWebApplication.Controllers
 {
     public class ReviewsController : Controller
     {
-        private readonly RestaurantReviewAppDbContext _context;
+        private readonly IRepo<Review> _reviewRepo;
+        private readonly IRepo<Author> _authorRepo;
 
-        public ReviewsController(RestaurantReviewAppDbContext context)
+        public ReviewsController(IRepo<Review> reviewRepo, IRepo<Author> authorRepo)
         {
-            _context = context;
+            _reviewRepo = reviewRepo;
+            _authorRepo = authorRepo;
         }
-
         // GET: Reviews
         public async Task<IActionResult> Index()
-        {
-            var restaurantReviewAppDbContext = _context.Reviews.Include(r => r.Author);
-            return View(await restaurantReviewAppDbContext.ToListAsync());
+        {          
+            return View(await _reviewRepo.GetAll());
         }
 
         // GET: Reviews/Details/5
@@ -34,9 +36,7 @@ namespace RestaurantReviewWebApplication.Controllers
                 return NotFound();
             }
 
-            var review = await _context.Reviews
-                .Include(r => r.Author)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var review = await _reviewRepo.GetById(id.Value);
             if (review == null)
             {
                 return NotFound();
@@ -46,9 +46,9 @@ namespace RestaurantReviewWebApplication.Controllers
         }
 
         // GET: Reviews/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "FirstName");
+            ViewData["AuthorId"] = new SelectList(await _authorRepo.GetAll(), "Id", "FirstName");
             return View();
         }
 
@@ -61,11 +61,10 @@ namespace RestaurantReviewWebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(review);
-                await _context.SaveChangesAsync();
+                await _reviewRepo.Create(review);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "FirstName", review.AuthorId);
+            ViewData["AuthorId"] = new SelectList(await _authorRepo.GetAll(), "Id", "FirstName", review.AuthorId);
             return View(review);
         }
 
@@ -77,12 +76,12 @@ namespace RestaurantReviewWebApplication.Controllers
                 return NotFound();
             }
 
-            var review = await _context.Reviews.FindAsync(id);
+            var review = await _reviewRepo.GetById(id.Value);
             if (review == null)
             {
                 return NotFound();
             }
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "FirstName", review.AuthorId);
+            ViewData["AuthorId"] = new SelectList(await _authorRepo.GetAll(), "Id", "FirstName", review.AuthorId);
             return View(review);
         }
 
@@ -102,12 +101,11 @@ namespace RestaurantReviewWebApplication.Controllers
             {
                 try
                 {
-                    _context.Update(review);
-                    await _context.SaveChangesAsync();
+                   await _reviewRepo.Update(review);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReviewExists(review.Id))
+                    if (!_reviewRepo.Exists(review.Id))
                     {
                         return NotFound();
                     }
@@ -118,7 +116,7 @@ namespace RestaurantReviewWebApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "FirstName", review.AuthorId);
+            ViewData["AuthorId"] = new SelectList(await _authorRepo.GetAll(), "Id", "FirstName", review.AuthorId);
             return View(review);
         }
 
@@ -130,9 +128,7 @@ namespace RestaurantReviewWebApplication.Controllers
                 return NotFound();
             }
 
-            var review = await _context.Reviews
-                .Include(r => r.Author)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var review = await _reviewRepo.GetById(id.Value);
             if (review == null)
             {
                 return NotFound();
@@ -146,15 +142,10 @@ namespace RestaurantReviewWebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var review = await _context.Reviews.FindAsync(id);
-            _context.Reviews.Remove(review);
-            await _context.SaveChangesAsync();
+            await _reviewRepo.Delete(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ReviewExists(int id)
-        {
-            return _context.Reviews.Any(e => e.Id == id);
-        }
+       
     }
 }

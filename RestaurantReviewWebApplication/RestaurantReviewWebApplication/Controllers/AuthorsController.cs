@@ -6,23 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RestaurantReviewWebApplication.DAL;
+using RestaurantReviewWebApplication.DAL.DBO;
+using RestaurantReviewWebApplication.DAL.Repos;
 using RestaurantReviewWebApplication.Models;
 
 namespace RestaurantReviewWebApplication.Controllers
 {
     public class AuthorsController : Controller
     {
-        private readonly RestaurantReviewAppDbContext _context;
+        private readonly IRepo<Author> _authorRepo;
 
-        public AuthorsController(RestaurantReviewAppDbContext context)
+        public AuthorsController(IRepo<Author> authorRepo)
         {
-            _context = context;
+            _authorRepo = authorRepo;
         }
 
         // GET: Authors
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Authors.ToListAsync());
+            return View(await _authorRepo.GetAll());
         }
 
         // GET: Authors/Details/5
@@ -33,8 +35,7 @@ namespace RestaurantReviewWebApplication.Controllers
                 return NotFound();
             }
 
-            var author = await _context.Authors
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var author = await _authorRepo.GetById(id.Value);
             if (author == null)
             {
                 return NotFound();
@@ -58,8 +59,7 @@ namespace RestaurantReviewWebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(author);
-                await _context.SaveChangesAsync();
+                await _authorRepo.Create(author);
                 return RedirectToAction(nameof(Index));
             }
             return View(author);
@@ -73,7 +73,7 @@ namespace RestaurantReviewWebApplication.Controllers
                 return NotFound();
             }
 
-            var author = await _context.Authors.FindAsync(id);
+            var author = await _authorRepo.GetById(id.Value);
             if (author == null)
             {
                 return NotFound();
@@ -97,12 +97,11 @@ namespace RestaurantReviewWebApplication.Controllers
             {
                 try
                 {
-                    _context.Update(author);
-                    await _context.SaveChangesAsync();
+                    await _authorRepo.Update(author);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AuthorExists(author.Id))
+                    if (!_authorRepo.Exists(author.Id))
                     {
                         return NotFound();
                     }
@@ -124,8 +123,7 @@ namespace RestaurantReviewWebApplication.Controllers
                 return NotFound();
             }
 
-            var author = await _context.Authors
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var author = await _authorRepo.GetById(id.Value);
             if (author == null)
             {
                 return NotFound();
@@ -139,15 +137,8 @@ namespace RestaurantReviewWebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var author = await _context.Authors.FindAsync(id);
-            _context.Authors.Remove(author);
-            await _context.SaveChangesAsync();
+            await _authorRepo.Delete(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool AuthorExists(int id)
-        {
-            return _context.Authors.Any(e => e.Id == id);
         }
     }
 }
