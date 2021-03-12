@@ -8,6 +8,7 @@ namespace RestaurantReviewWebApplication.Models
 {
     public class Restaurant
     {
+        //Model class for Restaurant object with corresponding fields and reasonable validation
         public int Id { get; set; }
 
         [Required]

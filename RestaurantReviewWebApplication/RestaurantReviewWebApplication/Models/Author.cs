@@ -8,6 +8,7 @@ namespace RestaurantReviewWebApplication.Models
 {
     public class Author 
     {
+        //Model class for Author object with corresponding fields and reasonable validation
         public int Id { get; set; }
 
         [Required]
