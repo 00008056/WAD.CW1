@@ -183,3 +183,5 @@ C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\Restaur
 C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication\obj\Debug\netcoreapp3.1\Razor\Views\Reviews\Details.cshtml.g.cs
 C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication\obj\Debug\netcoreapp3.1\Razor\Views\Reviews\Edit.cshtml.g.cs
 C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication\obj\Debug\netcoreapp3.1\Razor\Views\Reviews\Index.cshtml.g.cs
+C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication\bin\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.dll
+C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication\bin\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.pdb
