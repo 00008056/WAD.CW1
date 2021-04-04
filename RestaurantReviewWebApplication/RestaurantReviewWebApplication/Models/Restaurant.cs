@@ -26,7 +26,7 @@ namespace RestaurantReviewWebApplication.Models
 
         [Display(Name = "Website")]
         public string Website { get; set; }
+
         public virtual ICollection<Review> Reviews { get; set; }
- 
     }
 }

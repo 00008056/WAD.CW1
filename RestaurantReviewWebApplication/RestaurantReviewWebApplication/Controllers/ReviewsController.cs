@@ -2,150 +2,109 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RestaurantReviewWebApplication.DAL;
-using RestaurantReviewWebApplication.DAL.DBO;
-using RestaurantReviewWebApplication.DAL.Repos;
 using RestaurantReviewWebApplication.Models;
 
 namespace RestaurantReviewWebApplication.Controllers
 {
-    public class ReviewsController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ReviewsController : ControllerBase
     {
-        private readonly IRepo<Review> _reviewRepo;
-        private readonly IRepo<Author> _authorRepo;
+        private readonly RestaurantReviewWebApplicationDbContext _context;
 
-        public ReviewsController(IRepo<Review> reviewRepo, IRepo<Author> authorRepo)
+        public ReviewsController(RestaurantReviewWebApplicationDbContext context)
         {
-            _reviewRepo = reviewRepo;
-            _authorRepo = authorRepo;
-        }
-        // GET: Reviews
-        public async Task<IActionResult> Index()
-        {          
-            return View(await _reviewRepo.GetAll());
+            _context = context;
         }
 
-        // GET: Reviews/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: api/Reviews
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Review>>> GetReviews()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return await _context.Reviews.ToListAsync();
+        }
 
-            var review = await _reviewRepo.GetById(id.Value);
+        // GET: api/Reviews/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Review>> GetReview(int id)
+        {
+            var review = await _context.Reviews.FindAsync(id);
+
             if (review == null)
             {
                 return NotFound();
             }
 
-            return View(review);
+            return review;
         }
 
-        // GET: Reviews/Create
-        public async Task<IActionResult> Create()
-        {
-            ViewData["AuthorId"] = new SelectList(await _authorRepo.GetAll(), "Id", "FirstName");
-            return View();
-        }
-
-        // POST: Reviews/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Rating,Content,AuthorId,WouldRecommend,DateAdded")] Review review)
-        {
-            if (ModelState.IsValid)
-            {
-                await _reviewRepo.Create(review);
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["AuthorId"] = new SelectList(await _authorRepo.GetAll(), "Id", "FirstName", review.AuthorId);
-            return View(review);
-        }
-
-        // GET: Reviews/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var review = await _reviewRepo.GetById(id.Value);
-            if (review == null)
-            {
-                return NotFound();
-            }
-            ViewData["AuthorId"] = new SelectList(await _authorRepo.GetAll(), "Id", "FirstName", review.AuthorId);
-            return View(review);
-        }
-
-        // POST: Reviews/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Rating,Content,AuthorId,WouldRecommend,DateAdded")] Review review)
+        // PUT: api/Reviews/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutReview(int id, Review review)
         {
             if (id != review.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            if (ModelState.IsValid)
+            _context.Entry(review).State = EntityState.Modified;
+
+            try
             {
-                try
-                {
-                   await _reviewRepo.Update(review);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_reviewRepo.Exists(review.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
             }
-            ViewData["AuthorId"] = new SelectList(await _authorRepo.GetAll(), "Id", "FirstName", review.AuthorId);
-            return View(review);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ReviewExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        // GET: Reviews/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // POST: api/Reviews
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost]
+        public async Task<ActionResult<Review>> PostReview(Review review)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            _context.Reviews.Add(review);
+            await _context.SaveChangesAsync();
 
-            var review = await _reviewRepo.GetById(id.Value);
+            return CreatedAtAction("GetReview", new { id = review.Id }, review);
+        }
+
+        // DELETE: api/Reviews/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Review>> DeleteReview(int id)
+        {
+            var review = await _context.Reviews.FindAsync(id);
             if (review == null)
             {
                 return NotFound();
             }
 
-            return View(review);
+            _context.Reviews.Remove(review);
+            await _context.SaveChangesAsync();
+
+            return review;
         }
 
-        // POST: Reviews/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        private bool ReviewExists(int id)
         {
-            await _reviewRepo.Delete(id);
-            return RedirectToAction(nameof(Index));
+            return _context.Reviews.Any(e => e.Id == id);
         }
-
-       
     }
 }

@@ -2,143 +2,109 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RestaurantReviewWebApplication.DAL;
-using RestaurantReviewWebApplication.DAL.DBO;
-using RestaurantReviewWebApplication.DAL.Repos;
 using RestaurantReviewWebApplication.Models;
 
 namespace RestaurantReviewWebApplication.Controllers
 {
-    public class AuthorsController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthorsController : ControllerBase
     {
-        private readonly IRepo<Author> _authorRepo;
+        private readonly RestaurantReviewWebApplicationDbContext _context;
 
-        public AuthorsController(IRepo<Author> authorRepo)
+        public AuthorsController(RestaurantReviewWebApplicationDbContext context)
         {
-            _authorRepo = authorRepo;
+            _context = context;
         }
 
-        // GET: Authors
-        public async Task<IActionResult> Index()
+        // GET: api/Authors
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
-            return View(await _authorRepo.GetAll());
+            return await _context.Authors.ToListAsync();
         }
 
-        // GET: Authors/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: api/Authors/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Author>> GetAuthor(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var author = await _context.Authors.FindAsync(id);
 
-            var author = await _authorRepo.GetById(id.Value);
             if (author == null)
             {
                 return NotFound();
             }
 
-            return View(author);
+            return author;
         }
 
-        // GET: Authors/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Authors/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email")] Author author)
-        {
-            if (ModelState.IsValid)
-            {
-                await _authorRepo.Create(author);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(author);
-        }
-
-        // GET: Authors/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var author = await _authorRepo.GetById(id.Value);
-            if (author == null)
-            {
-                return NotFound();
-            }
-            return View(author);
-        }
-
-        // POST: Authors/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email")] Author author)
+        // PUT: api/Authors/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAuthor(int id, Author author)
         {
             if (id != author.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            if (ModelState.IsValid)
+            _context.Entry(author).State = EntityState.Modified;
+
+            try
             {
-                try
-                {
-                    await _authorRepo.Update(author);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_authorRepo.Exists(author.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
             }
-            return View(author);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AuthorExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        // GET: Authors/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // POST: api/Authors
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost]
+        public async Task<ActionResult<Author>> PostAuthor(Author author)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            _context.Authors.Add(author);
+            await _context.SaveChangesAsync();
 
-            var author = await _authorRepo.GetById(id.Value);
+            return CreatedAtAction("GetAuthor", new { id = author.Id }, author);
+        }
+
+        // DELETE: api/Authors/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Author>> DeleteAuthor(int id)
+        {
+            var author = await _context.Authors.FindAsync(id);
             if (author == null)
             {
                 return NotFound();
             }
 
-            return View(author);
+            _context.Authors.Remove(author);
+            await _context.SaveChangesAsync();
+
+            return author;
         }
 
-        // POST: Authors/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        private bool AuthorExists(int id)
         {
-            await _authorRepo.Delete(id);
-            return RedirectToAction(nameof(Index));
+            return _context.Authors.Any(e => e.Id == id);
         }
     }
 }
