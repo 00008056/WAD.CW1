@@ -19,4 +19,9 @@
     <ProjectReference Include="..\RestaurantReviewWebApplication.DAL\RestaurantReviewWebApplication.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\pages\index.html" />
+    <None Include="wwwroot\pages\restaurants.html" />
+  </ItemGroup>
+
 </Project>

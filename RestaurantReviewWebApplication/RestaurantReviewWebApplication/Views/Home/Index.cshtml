@@ -2,7 +2,41 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div ng-app="RestaurantReviewApp">
+    <div ng-view></div>
 </div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+<script type="text/javascript">
+    angular
+        .module('RestaurantReviewApp', ['ngRoute'])
+        .config(function ($routeProvider) {
+            $routeProvider
+                .when('/', {
+                    templateUrl: 'pages/index.html',
+                    controller: 'IndexController'
+                })
+                .when('/reviews', {
+                    templateUrl: 'pages/reviews.html',
+                    controller: 'ReviewsController'
+                })
+                .when('/restaurants', {
+                    templateUrl: 'pages/restaurants.html',
+                    controller: 'RestaurantsController'
+                })
+                .when('/authors', {
+                    templateUrl: 'pages/authors.html',
+                    controller: 'AuthorsController'
+                })
+                .otherwise({
+                    redirectTo: '/'
+                });
+        })
+        .controller('IndexController', ['$scope', '$http', function ($scope, $http) {
+            $scope.message = 'Welcome To Review App';
+        }]);
+
+      
+
+</script>
