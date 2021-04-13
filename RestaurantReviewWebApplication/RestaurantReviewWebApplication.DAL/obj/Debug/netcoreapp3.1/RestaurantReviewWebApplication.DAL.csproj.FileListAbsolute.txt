@@ -1,12 +1,11 @@
-C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\bin\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.deps.json
-C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\bin\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.runtimeconfig.json
-C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\bin\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.runtimeconfig.dev.json
-C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\bin\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.dll
-C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\bin\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.pdb
-C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\obj\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.csprojAssemblyReference.cache
-C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\obj\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.AssemblyInfoInputs.cache
-C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\obj\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.AssemblyInfo.cs
-C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\obj\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.csproj.CoreCompileInputs.cache
-C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\obj\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.dll
-C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\obj\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.pdb
-C:\Users\User\OneDrive\Desktop\New folder\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\obj\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.genruntimeconfig.cache
+C:\Users\User\OneDrive\Desktop\WAD.CW\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\obj\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.AssemblyInfoInputs.cache
+C:\Users\User\OneDrive\Desktop\WAD.CW\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\obj\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.AssemblyInfo.cs
+C:\Users\User\OneDrive\Desktop\WAD.CW\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\obj\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.csproj.CoreCompileInputs.cache
+C:\Users\User\OneDrive\Desktop\WAD.CW\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\bin\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.deps.json
+C:\Users\User\OneDrive\Desktop\WAD.CW\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\bin\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.runtimeconfig.json
+C:\Users\User\OneDrive\Desktop\WAD.CW\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\bin\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.runtimeconfig.dev.json
+C:\Users\User\OneDrive\Desktop\WAD.CW\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\bin\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.dll
+C:\Users\User\OneDrive\Desktop\WAD.CW\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\bin\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.pdb
+C:\Users\User\OneDrive\Desktop\WAD.CW\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\obj\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.dll
+C:\Users\User\OneDrive\Desktop\WAD.CW\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\obj\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.pdb
+C:\Users\User\OneDrive\Desktop\WAD.CW\RestaurantReviewWebApplication\RestaurantReviewWebApplication.DAL\obj\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.genruntimeconfig.cache

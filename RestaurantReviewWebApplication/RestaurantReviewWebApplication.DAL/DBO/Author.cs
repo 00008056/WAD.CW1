@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantReviewWebApplication.DAL.DBO
 {
-    public class Author 
+    public class Author
     {
         //Model class for Author object with corresponding fields and reasonable validation
         public int Id { get; set; }
@@ -21,6 +21,9 @@ namespace RestaurantReviewWebApplication.DAL.DBO
 
         [EmailAddress]
         public string Email { get; set; }
+
+        [Required]
+        public string BriefInfo { get; set; }
 
     }
 }

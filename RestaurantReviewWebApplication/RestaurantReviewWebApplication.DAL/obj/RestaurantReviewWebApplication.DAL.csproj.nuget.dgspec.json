@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\OneDrive\\Desktop\\New folder\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.DAL\\RestaurantReviewWebApplication.DAL.csproj": {}
+    "C:\\Users\\User\\OneDrive\\Desktop\\WAD.CW\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.DAL\\RestaurantReviewWebApplication.DAL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\OneDrive\\Desktop\\New folder\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.DAL\\RestaurantReviewWebApplication.DAL.csproj": {
+    "C:\\Users\\User\\OneDrive\\Desktop\\WAD.CW\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.DAL\\RestaurantReviewWebApplication.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\OneDrive\\Desktop\\New folder\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.DAL\\RestaurantReviewWebApplication.DAL.csproj",
+        "projectUniqueName": "C:\\Users\\User\\OneDrive\\Desktop\\WAD.CW\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.DAL\\RestaurantReviewWebApplication.DAL.csproj",
         "projectName": "RestaurantReviewWebApplication.DAL",
-        "projectPath": "C:\\Users\\User\\OneDrive\\Desktop\\New folder\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.DAL\\RestaurantReviewWebApplication.DAL.csproj",
+        "projectPath": "C:\\Users\\User\\OneDrive\\Desktop\\WAD.CW\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.DAL\\RestaurantReviewWebApplication.DAL.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\OneDrive\\Desktop\\New folder\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.DAL\\obj\\",
+        "outputPath": "C:\\Users\\User\\OneDrive\\Desktop\\WAD.CW\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.DAL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -42,25 +42,21 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.12, )"
+              "version": "[3.1.13, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[3.1.12, )"
+              "version": "[3.1.13, )"
             },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
-              "version": "[3.1.12, )"
+              "version": "[3.1.13, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.12, )"
-            },
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
-              "target": "Package",
-              "version": "[3.1.5, )"
+              "version": "[3.1.13, )"
             }
           },
           "imports": [
