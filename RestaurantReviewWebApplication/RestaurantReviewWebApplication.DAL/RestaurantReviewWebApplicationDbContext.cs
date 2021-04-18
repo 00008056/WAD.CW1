@@ -5,10 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace RestaurantReviewWebApplication.DAL
 {
-    public class RestaurantReviewWebApplicationDbContext:DbContext
+    public class RestaurantReviewWebApplicationDbContext : DbContext
     {
         public RestaurantReviewWebApplicationDbContext(DbContextOptions<RestaurantReviewWebApplicationDbContext> options) : base(options)
         {

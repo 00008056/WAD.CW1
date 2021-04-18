@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantReviewWebApplication.DAL.Repositories
 {
-    public class ReviewRepository : BaseRepository, IRepository<Review>
+    class ReviewRepository : BaseRepository, IRepository<Review>
     {
         public ReviewRepository(RestaurantReviewWebApplicationDbContext context) : base(context)
         {
@@ -35,7 +35,7 @@ namespace RestaurantReviewWebApplication.DAL.Repositories
 
         public async Task<List<Review>> GetAll()
         {
-            return await _context.Reviews.ToListAsync();
+            return await _context.Reviews.Include(r => r.Author).ToListAsync();
         }
 
         public async Task<Review> GetById(int id)

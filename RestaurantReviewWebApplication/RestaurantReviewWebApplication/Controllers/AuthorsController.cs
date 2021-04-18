@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantReviewWebApplication.DAL;
+using RestaurantReviewWebApplication.DAL.DBO;
+using RestaurantReviewWebApplication.DAL.Repositories;
 using RestaurantReviewWebApplication.Models;
 
 namespace RestaurantReviewWebApplication.Controllers
@@ -14,25 +16,34 @@ namespace RestaurantReviewWebApplication.Controllers
     [ApiController]
     public class AuthorsController : ControllerBase
     {
-        private readonly RestaurantReviewWebApplicationDbContext _context;
+        private readonly IRepository<Author> _authorRepo;
 
-        public AuthorsController(RestaurantReviewWebApplicationDbContext context)
+        public AuthorsController(IRepository<Author> authorRepo)
         {
-            _context = context;
+            _authorRepo = authorRepo;
         }
 
         // GET: api/Authors
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
-            return await _context.Authors.ToListAsync();
+            //return await _context.Authors.ToListAsync();
+            return await _authorRepo.GetAll();
         }
 
         // GET: api/Authors/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Author>> GetAuthor(int id)
         {
-            var author = await _context.Authors.FindAsync(id);
+            //var author = await _context.Authors.FindAsync(id);
+
+            //if (author == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //return author;
+            var author = await _authorRepo.GetById(id);
 
             if (author == null)
             {
@@ -53,15 +64,16 @@ namespace RestaurantReviewWebApplication.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(author).State = EntityState.Modified;
+            //_context.Entry(author).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                //await _context.SaveChangesAsync();
+                await _authorRepo.Update(author);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AuthorExists(id))
+                if (!_authorRepo.Exists(id))//!AuthorExists(id))
                 {
                     return NotFound();
                 }
@@ -80,8 +92,16 @@ namespace RestaurantReviewWebApplication.Controllers
         [HttpPost]
         public async Task<ActionResult<Author>> PostAuthor(Author author)
         {
-            _context.Authors.Add(author);
-            await _context.SaveChangesAsync();
+            //_context.Authors.Add(author);
+            //await _context.SaveChangesAsync();
+
+            //return CreatedAtAction("GetAuthor", new { id = author.Id }, author);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _authorRepo.Create(author);
 
             return CreatedAtAction("GetAuthor", new { id = author.Id }, author);
         }
@@ -90,21 +110,28 @@ namespace RestaurantReviewWebApplication.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Author>> DeleteAuthor(int id)
         {
-            var author = await _context.Authors.FindAsync(id);
+            //var author = await _context.Authors.FindAsync(id);
+            //if (author == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //_context.Authors.Remove(author);
+            //await _context.SaveChangesAsync();
+
+            //return author;
+            var author = await _authorRepo.GetById(id);
             if (author == null)
             {
                 return NotFound();
             }
 
-            _context.Authors.Remove(author);
-            await _context.SaveChangesAsync();
 
-            return author;
+            await _authorRepo.Delete(id);
+
+            return NoContent();
         }
 
-        private bool AuthorExists(int id)
-        {
-            return _context.Authors.Any(e => e.Id == id);
-        }
+        
     }
 }

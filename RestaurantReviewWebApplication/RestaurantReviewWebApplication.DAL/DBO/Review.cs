@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace RestaurantReviewWebApplication.DAL.DBO
 {
     public class Review
@@ -19,11 +20,10 @@ namespace RestaurantReviewWebApplication.DAL.DBO
 
         public int? AuthorId { get; set; }
 
-        public int? RestaurantId { get; set; }
-
         [Required]
         public bool WouldRecommend { get; set; }
 
+        [Required]
         public DateTime DateAdded { get; set; }
 
         public virtual Restaurant Restaurant { get; set; }

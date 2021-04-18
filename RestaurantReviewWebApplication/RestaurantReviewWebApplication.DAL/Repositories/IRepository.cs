@@ -13,5 +13,6 @@ namespace RestaurantReviewWebApplication.DAL.Repositories
         Task<T> GetById(int id);
         Task<List<T>> GetAll();
         bool Exists(int id);
+
     }
 }

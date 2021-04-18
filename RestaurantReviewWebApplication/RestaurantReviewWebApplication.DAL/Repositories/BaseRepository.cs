@@ -4,9 +4,8 @@ using System.Text;
 
 namespace RestaurantReviewWebApplication.DAL.Repositories
 {
-    public abstract class BaseRepository
+    public class BaseRepository
     {
-        
         protected readonly RestaurantReviewWebApplicationDbContext _context;
 
         protected BaseRepository(RestaurantReviewWebApplicationDbContext context)

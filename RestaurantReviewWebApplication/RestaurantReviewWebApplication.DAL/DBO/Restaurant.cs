@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,7 +16,10 @@ namespace RestaurantReviewWebApplication.DAL.DBO
         public string Name { get; set; }
 
         [Required]
-        public string ImageUrl { get; set; }
+        public byte[] Image { get; set; }
+
+        [Required]
+        public Category Category { get; set; }
 
         [Required]
         [MinLength(5)]
@@ -24,9 +28,17 @@ namespace RestaurantReviewWebApplication.DAL.DBO
         [Required]
         public string Location { get; set; }
 
-        [Display(Name = "Website")]
         public string Website { get; set; }
 
         public virtual ICollection<Review> Reviews { get; set; }
     }
+
+    
+public enum Category
+{
+    Cafe,
+    FastFood,
+    CasualDining,
+    FineDining
+}
 }

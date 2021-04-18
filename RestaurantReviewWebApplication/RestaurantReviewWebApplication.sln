@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantReviewWebApplication", "RestaurantReviewWebApplication\RestaurantReviewWebApplication.csproj", "{0C33B298-9BFA-4A82-8866-727F5DFDC733}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantReviewWebApplication", "RestaurantReviewWebApplication\RestaurantReviewWebApplication.csproj", "{0C33B298-9BFA-4A82-8866-727F5DFDC733}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantReviewWebApplication.DAL", "RestaurantReviewWebApplication.DAL\RestaurantReviewWebApplication.DAL.csproj", "{589ABC34-94EF-4B18-8339-D92DA2330AD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{0C33B298-9BFA-4A82-8866-727F5DFDC733}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C33B298-9BFA-4A82-8866-727F5DFDC733}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C33B298-9BFA-4A82-8866-727F5DFDC733}.Release|Any CPU.Build.0 = Release|Any CPU
+		{589ABC34-94EF-4B18-8339-D92DA2330AD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{589ABC34-94EF-4B18-8339-D92DA2330AD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{589ABC34-94EF-4B18-8339-D92DA2330AD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{589ABC34-94EF-4B18-8339-D92DA2330AD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,11 +13,7 @@ namespace RestaurantReviewWebApplication.DAL.DBO
 
         [Required]
         [MinLength(2)]
-        public string FirstName { get; set; }
-
-        [Required]
-        [MinLength(2)]
-        public string LastName { get; set; }
+        public string FullName { get; set; }
 
         [EmailAddress]
         public string Email { get; set; }
@@ -25,5 +21,6 @@ namespace RestaurantReviewWebApplication.DAL.DBO
         [Required]
         public string BriefInfo { get; set; }
 
+        public virtual ICollection<Review> Reviews { get; set; }
     }
 }

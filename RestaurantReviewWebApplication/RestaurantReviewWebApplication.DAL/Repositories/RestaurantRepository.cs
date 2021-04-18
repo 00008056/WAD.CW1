@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantReviewWebApplication.DAL.Repositories
 {
-    public class RestaurantRepository : BaseRepository, IRepository<Restaurant>
+    class RestaurantRepository : BaseRepository, IRepository<Restaurant>
     {
         public RestaurantRepository(RestaurantReviewWebApplicationDbContext context) : base(context)
         {
@@ -36,6 +36,7 @@ namespace RestaurantReviewWebApplication.DAL.Repositories
         public async Task<List<Restaurant>> GetAll()
         {
             return await _context.Restaurants.ToListAsync();
+
         }
 
         public async Task<Restaurant> GetById(int id)
@@ -49,4 +50,4 @@ namespace RestaurantReviewWebApplication.DAL.Repositories
             await _context.SaveChangesAsync();
         }
     }
-    }
+}
