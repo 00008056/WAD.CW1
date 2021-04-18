@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantReviewWebApplication.DAL;
-using RestaurantReviewWebApplication.DAL.DBO;
-using RestaurantReviewWebApplication.DAL.Repositories;
 using RestaurantReviewWebApplication.Models;
 
 namespace RestaurantReviewWebApplication.Controllers
@@ -16,25 +14,25 @@ namespace RestaurantReviewWebApplication.Controllers
     [ApiController]
     public class ReviewsController : ControllerBase
     {
-        private readonly IRepository<Review> _reviewRepo;
+        private readonly RestaurantReviewWebApplicationDbContext _context;
 
-        public ReviewsController(IRepository<Review> reviewRepo)
+        public ReviewsController(RestaurantReviewWebApplicationDbContext context)
         {
-            _reviewRepo = reviewRepo;
+            _context = context;
         }
 
         // GET: api/Reviews
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviews()
         {
-            return await _reviewRepo.GetAll();
+            return await _context.Reviews.ToListAsync();
         }
 
         // GET: api/Reviews/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Review>> GetReview(int id)
         {
-            var review = await _reviewRepo.GetById(id);
+            var review = await _context.Reviews.FindAsync(id);
 
             if (review == null)
             {
@@ -55,13 +53,15 @@ namespace RestaurantReviewWebApplication.Controllers
                 return BadRequest();
             }
 
+            _context.Entry(review).State = EntityState.Modified;
+
             try
             {
-                await _reviewRepo.Update(review);
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_reviewRepo.Exists(id))
+                if (!ReviewExists(id))
                 {
                     return NotFound();
                 }
@@ -80,12 +80,8 @@ namespace RestaurantReviewWebApplication.Controllers
         [HttpPost]
         public async Task<ActionResult<Review>> PostReview(Review review)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            await _reviewRepo.Create(review);
+            _context.Reviews.Add(review);
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetReview", new { id = review.Id }, review);
         }
@@ -94,16 +90,21 @@ namespace RestaurantReviewWebApplication.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Review>> DeleteReview(int id)
         {
-            var review = await _reviewRepo.GetById(id);
+            var review = await _context.Reviews.FindAsync(id);
             if (review == null)
             {
                 return NotFound();
             }
 
+            _context.Reviews.Remove(review);
+            await _context.SaveChangesAsync();
 
-            await _reviewRepo.Delete(id);
+            return review;
+        }
 
-            return NoContent();
-        }   
+        private bool ReviewExists(int id)
+        {
+            return _context.Reviews.Any(e => e.Id == id);
+        }
     }
 }

@@ -2743,21 +2743,6 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
-      },
-      "RestaurantReviewWebApplication.DAL/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore": "3.1.13",
-          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.13",
-          "Microsoft.EntityFrameworkCore.Sqlite": "3.1.13"
-        },
-        "compile": {
-          "bin/placeholder/RestaurantReviewWebApplication.DAL.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/RestaurantReviewWebApplication.DAL.dll": {}
-        }
       }
     }
   },
@@ -8825,11 +8810,6 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
-    },
-    "RestaurantReviewWebApplication.DAL/1.0.0": {
-      "type": "project",
-      "path": "../RestaurantReviewWebApplication.DAL/RestaurantReviewWebApplication.DAL.csproj",
-      "msbuildProject": "../RestaurantReviewWebApplication.DAL/RestaurantReviewWebApplication.DAL.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -8838,8 +8818,7 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.13",
       "Microsoft.EntityFrameworkCore.Sqlite >= 3.1.13",
       "Microsoft.EntityFrameworkCore.Tools >= 3.1.13",
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.5",
-      "RestaurantReviewWebApplication.DAL >= 1.0.0"
+      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.5"
     ]
   },
   "packageFolders": {
@@ -8848,11 +8827,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\OneDrive\\Desktop\\WAD.CW\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.csproj",
+      "projectUniqueName": "C:\\Users\\User\\OneDrive\\Desktop\\WAD\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.csproj",
       "projectName": "RestaurantReviewWebApplication",
-      "projectPath": "C:\\Users\\User\\OneDrive\\Desktop\\WAD.CW\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.csproj",
+      "projectPath": "C:\\Users\\User\\OneDrive\\Desktop\\WAD\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\OneDrive\\Desktop\\WAD.CW\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication\\obj\\",
+      "outputPath": "C:\\Users\\User\\OneDrive\\Desktop\\WAD\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -8868,11 +8847,7 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {
-            "C:\\Users\\User\\OneDrive\\Desktop\\WAD.CW\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.DAL\\RestaurantReviewWebApplication.DAL.csproj": {
-              "projectPath": "C:\\Users\\User\\OneDrive\\Desktop\\WAD.CW\\RestaurantReviewWebApplication\\RestaurantReviewWebApplication.DAL\\RestaurantReviewWebApplication.DAL.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

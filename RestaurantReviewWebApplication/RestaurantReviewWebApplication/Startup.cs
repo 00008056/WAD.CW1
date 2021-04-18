@@ -5,8 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RestaurantReviewWebApplication.DAL;
-using RestaurantReviewWebApplication.DAL.DBO;
-using RestaurantReviewWebApplication.DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,19 +26,8 @@ namespace RestaurantReviewWebApplication
         {
             services.AddControllersWithViews();
             services.AddDbContext<RestaurantReviewWebApplicationDbContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("RestaurantReviewAppConnString")));
-
-
-
-            //dependency injection
-           
-            services.AddScoped<IRepository<Restaurant>, RestaurantRepository>();
-            services.AddScoped<IRepository<Review>, ReviewRepository>();
-            services.AddScoped<IRepository<Author>, AuthorRepository>();
-
+              opt => opt.UseSqlServer(Configuration.GetConnectionString("RestaurantReviewAppConnectionString")));
         }
-
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

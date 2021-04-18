@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantReviewWebApplication.DAL;
-using RestaurantReviewWebApplication.DAL.DBO;
-using RestaurantReviewWebApplication.DAL.Repositories;
 using RestaurantReviewWebApplication.Models;
 
 namespace RestaurantReviewWebApplication.Controllers
@@ -16,27 +14,25 @@ namespace RestaurantReviewWebApplication.Controllers
     [ApiController]
     public class AuthorsController : ControllerBase
     {
-        private readonly IRepository<Author> _authorRepo;
+        private readonly RestaurantReviewWebApplicationDbContext _context;
 
-        public AuthorsController(IRepository<Author> authorRepo)
+        public AuthorsController(RestaurantReviewWebApplicationDbContext context)
         {
-          _authorRepo = authorRepo;
+            _context = context;
         }
 
         // GET: api/Authors
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
-            return await _authorRepo.GetAll();
-
+            return await _context.Authors.ToListAsync();
         }
 
         // GET: api/Authors/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Author>> GetAuthor(int id)
         {
-            
-            var author = await _authorRepo.GetById(id);
+            var author = await _context.Authors.FindAsync(id);
 
             if (author == null)
             {
@@ -57,13 +53,15 @@ namespace RestaurantReviewWebApplication.Controllers
                 return BadRequest();
             }
 
+            _context.Entry(author).State = EntityState.Modified;
+
             try
             {
-                await _authorRepo.Update(author);
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_authorRepo.Exists(id))
+                if (!AuthorExists(id))
                 {
                     return NotFound();
                 }
@@ -82,13 +80,9 @@ namespace RestaurantReviewWebApplication.Controllers
         [HttpPost]
         public async Task<ActionResult<Author>> PostAuthor(Author author)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            _context.Authors.Add(author);
+            await _context.SaveChangesAsync();
 
-            await _authorRepo.Create(author);
-        
             return CreatedAtAction("GetAuthor", new { id = author.Id }, author);
         }
 
@@ -96,18 +90,21 @@ namespace RestaurantReviewWebApplication.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Author>> DeleteAuthor(int id)
         {
-            var author = await _authorRepo.GetById(id);
+            var author = await _context.Authors.FindAsync(id);
             if (author == null)
             {
                 return NotFound();
             }
 
-            
-            await _authorRepo.Delete(id);
+            _context.Authors.Remove(author);
+            await _context.SaveChangesAsync();
 
-            return NoContent();
+            return author;
         }
 
-       
+        private bool AuthorExists(int id)
+        {
+            return _context.Authors.Any(e => e.Id == id);
+        }
     }
 }

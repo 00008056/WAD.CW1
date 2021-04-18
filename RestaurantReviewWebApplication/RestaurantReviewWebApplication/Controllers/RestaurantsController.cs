@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantReviewWebApplication.DAL;
-using RestaurantReviewWebApplication.DAL.DBO;
-using RestaurantReviewWebApplication.DAL.Repositories;
 using RestaurantReviewWebApplication.Models;
 
 namespace RestaurantReviewWebApplication.Controllers
@@ -16,26 +14,25 @@ namespace RestaurantReviewWebApplication.Controllers
     [ApiController]
     public class RestaurantsController : ControllerBase
     {
-        private readonly IRepository<Restaurant> _restaurantRepo;
+        private readonly RestaurantReviewWebApplicationDbContext _context;
 
-        public RestaurantsController(IRepository<Restaurant> restaurantRepo)
+        public RestaurantsController(RestaurantReviewWebApplicationDbContext context)
         {
-            _restaurantRepo = restaurantRepo;
+            _context = context;
         }
 
         // GET: api/Restaurants
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Restaurant>>> GetRestaurants()
         {
-         
-            return await _restaurantRepo.GetAll();
+            return await _context.Restaurants.ToListAsync();
         }
 
         // GET: api/Restaurants/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Restaurant>> GetRestaurant(int id)
         {
-            var restaurant = await _restaurantRepo.GetById(id);
+            var restaurant = await _context.Restaurants.FindAsync(id);
 
             if (restaurant == null)
             {
@@ -56,15 +53,15 @@ namespace RestaurantReviewWebApplication.Controllers
                 return BadRequest();
             }
 
-           
+            _context.Entry(restaurant).State = EntityState.Modified;
 
             try
             {
-                await _restaurantRepo.Update(restaurant);
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_restaurantRepo.Exists(id))
+                if (!RestaurantExists(id))
                 {
                     return NotFound();
                 }
@@ -83,12 +80,8 @@ namespace RestaurantReviewWebApplication.Controllers
         [HttpPost]
         public async Task<ActionResult<Restaurant>> PostRestaurant(Restaurant restaurant)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            await _restaurantRepo.Create(restaurant);
+            _context.Restaurants.Add(restaurant);
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRestaurant", new { id = restaurant.Id }, restaurant);
         }
@@ -97,18 +90,21 @@ namespace RestaurantReviewWebApplication.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Restaurant>> DeleteRestaurant(int id)
         {
-            var restaurant = await _restaurantRepo.GetById(id);
+            var restaurant = await _context.Restaurants.FindAsync(id);
             if (restaurant == null)
             {
                 return NotFound();
             }
 
+            _context.Restaurants.Remove(restaurant);
+            await _context.SaveChangesAsync();
 
-            await _restaurantRepo.Delete(id);
-
-            return NoContent();
+            return restaurant;
         }
 
-        
+        private bool RestaurantExists(int id)
+        {
+            return _context.Restaurants.Any(e => e.Id == id);
+        }
     }
 }
