@@ -168,3 +168,6 @@ C:\Users\User\OneDrive\Desktop\WAD\RestaurantReviewWebApplication\RestaurantRevi
 C:\Users\User\OneDrive\Desktop\WAD\RestaurantReviewWebApplication\RestaurantReviewWebApplication\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\User\OneDrive\Desktop\WAD\RestaurantReviewWebApplication\RestaurantReviewWebApplication\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\User\OneDrive\Desktop\WAD\RestaurantReviewWebApplication\RestaurantReviewWebApplication\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\User\OneDrive\Desktop\WAD\RestaurantReviewWebApplication\RestaurantReviewWebApplication\bin\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.dll
+C:\Users\User\OneDrive\Desktop\WAD\RestaurantReviewWebApplication\RestaurantReviewWebApplication\bin\Debug\netcoreapp3.1\RestaurantReviewWebApplication.DAL.pdb
+C:\Users\User\OneDrive\Desktop\WAD\RestaurantReviewWebApplication\RestaurantReviewWebApplication\bin\Debug\netcoreapp3.1\AutoMapper.dll

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using RestaurantReviewWebApplication.DAL;
 using RestaurantReviewWebApplication.DAL.DBO;
 using RestaurantReviewWebApplication.DAL.Repositories;
+using RestaurantReviewWebApplication.DTO;
 using RestaurantReviewWebApplication.Models;
 
 namespace RestaurantReviewWebApplication.Controllers
@@ -16,11 +18,14 @@ namespace RestaurantReviewWebApplication.Controllers
     [ApiController]
     public class AuthorsController : ControllerBase
     {
+       
         private readonly IRepository<Author> _authorRepo;
-
+        
+       
         public AuthorsController(IRepository<Author> authorRepo)
-        {
+        {          
             _authorRepo = authorRepo;
+                
         }
 
         // GET: api/Authors
@@ -28,7 +33,16 @@ namespace RestaurantReviewWebApplication.Controllers
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
             //return await _context.Authors.ToListAsync();
-            return await _authorRepo.GetAll();
+            var authors =  await _authorRepo.GetAll();
+            return Ok(authors.Select(a => new AuthorDTO
+            {
+               
+                FullName = a.FullName,
+                Email = a.Email,
+                BriefInfo = a.BriefInfo
+            }));
+
+
         }
 
         // GET: api/Authors/5
@@ -65,7 +79,8 @@ namespace RestaurantReviewWebApplication.Controllers
             }
 
             //_context.Entry(author).State = EntityState.Modified;
-
+           
+            
             try
             {
                 //await _context.SaveChangesAsync();
@@ -133,5 +148,9 @@ namespace RestaurantReviewWebApplication.Controllers
         }
 
         
+    }
+
+    internal interface IMapper
+    {
     }
 }

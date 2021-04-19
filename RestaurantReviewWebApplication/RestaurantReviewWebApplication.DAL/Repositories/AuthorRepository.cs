@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantReviewWebApplication.DAL.Repositories
 {
-    class AuthorRepository : BaseRepository, IRepository<Author>
+    public class AuthorRepository : BaseRepository, IRepository<Author>
     {
 
         public AuthorRepository(RestaurantReviewWebApplicationDbContext context) : base(context)

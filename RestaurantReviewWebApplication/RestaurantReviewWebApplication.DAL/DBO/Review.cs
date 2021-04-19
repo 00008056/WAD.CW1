@@ -20,6 +20,8 @@ namespace RestaurantReviewWebApplication.DAL.DBO
 
         public int? AuthorId { get; set; }
 
+        public int RestaurantId { get; set; }
+
         [Required]
         public bool WouldRecommend { get; set; }
 

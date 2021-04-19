@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using RestaurantReviewWebApplication.DAL;
 using RestaurantReviewWebApplication.DAL.DBO;
 using RestaurantReviewWebApplication.DAL.Repositories;
+using RestaurantReviewWebApplication.DTO;
 using RestaurantReviewWebApplication.Models;
 
 namespace RestaurantReviewWebApplication.Controllers
@@ -25,10 +26,15 @@ namespace RestaurantReviewWebApplication.Controllers
 
         // GET: api/Restaurants
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Restaurant>>> GetRestaurants()
+        public async Task<ActionResult<IEnumerable<RestaurantListDTO>>> GetRestaurants()
         {
             //return await _context.Restaurants.ToListAsync();
-            return await _restaurantRepo.GetAll();
+            var restaurants = await _restaurantRepo.GetAll();
+            return Ok(restaurants.Select(r => new RestaurantListDTO
+            {           
+                Name = r.Name,
+                Image = r.Image
+            })); 
         }
 
         // GET: api/Restaurants/5
