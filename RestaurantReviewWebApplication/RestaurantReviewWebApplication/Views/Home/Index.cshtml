@@ -18,7 +18,7 @@
                     controller: 'IndexController'
                 })
                 .when('/reviews', {
-                    templateUrl: 'pages/reviews.html',
+                    templateUrl: 'pages/reviews/reviews.html',
                     controller: 'ReviewsController'
                 })
                 .when('/restaurants', {
@@ -26,9 +26,19 @@
                     controller: 'RestaurantsController'
                 })
                 .when('/authors', {
-                    templateUrl: 'pages/authors.html',
+                    templateUrl: 'pages/authors/authors.html',
                     controller: 'AuthorsController'
                 })
+                .when('/addAuthor',
+                    {
+                        templateUrl: 'pages/authors/postAuthor.html',
+                        controller: 'AddAuthorController'
+                    })
+                .when('/addReview',
+                    {
+                        templateUrl: 'pages/reviews/postReview.html',
+                        controller: 'AddReviewController'
+                    })
                 .otherwise({
                     redirectTo: '/'
                 });
@@ -49,14 +59,97 @@
                 .then(function (response) {
                     $scope.authors = response.data;
                 });
+            $scope.Delete = function (author) {
+                $http.delete("@Url.Action("GetAuthors", "Authors")/" + author.id).then(function (response) {
+                    var index = $scope.authors.indexOf(author);
+                    $scope.authors.splice(index, 1);
+                });
+            }
         }])
         .controller('ReviewsController', ['$scope', '$http', function ($scope, $http) {
-            $scope.message = 'Here reviews should be displayed';
+            $scope.reviews = [];
             $scope.authors = [];
+            $scope.selectedAuthor = null;
+
             $http.get('@Url.Action("GetReviews", "Reviews")')
                 .then(function (response) {
                     $scope.reviews = response.data;
                 });
+            $scope.formatDate = function (date) {
+                return new Date(date);
+            };
+
+            $scope.GetReviews = function () {
+                var url = '@Url.Action("GetReviews", "Reviews")';
+                if ($scope.selectedAuthor) {
+                    url += '?authorId=' + $scope.selectedAuthor.id;
+                }
+                $http.get(url)
+                    .then(function (response) {
+                        $scope.reviews = response.data;
+                    });
+            };
+            $scope.GetReviews(null);
+             $scope.Delete = function (review) {
+                $http.delete("@Url.Action("GetReviews", "Reviews")/" + review.id).then(function (response){
+                    var index = $scope.reviews.indexOf(review);
+                    $scope.reviews.splice(index, 1);
+                    });
+            }
+        }])
+        .controller('AddAuthorController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+            $scope.author = {
+                id: 0,
+                fullName: '',
+                email: '',
+                briefInfo: ''
+            };
+
+            $scope.PostPutAuthor = function () {
+                $http.post('@Url.Action("PostAuthor", "Authors")', $scope.author)
+                    .then(function (response) {
+                        $location.path('/authors');
+                    })
+            }
+        }])
+        .controller('AddReviewController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+            $scope.authors = [];
+            $scope.review = {
+                id: 0,
+                content: '',
+                authorId: '',
+                wouldRecommend: '',
+                dateAdded: ''
+            };
+            $http.get('@Url.Action("GetAuthors", "Authors")')
+                .then(function (response) {
+                    $scope.authors = response.data;
+                });
+
+            $scope.PostReview = function () {
+                $http.post('@Url.Action("PostReview", "Reviews")', $scope.review)
+                    .then(function (response) {
+                        $location.path('/reviews');
+                    })
+            }
+        }])
+        .controller('EditAuthorController', ['$scope', '$http', '$location', '$routeParams', function ($scope, $http, $location, $routeParams) {
+            $scope.author = {
+                id: 0,
+                fullName: '',
+                email: '',
+                briefInfo: ''
+            };
+            $http.get('@Url.Action("GetAuthors", "Authors")/' + $routeParams.authorId)
+                .then(function (response) {
+                    $scope.author = response.data;
+                });
+            $scope.PostPutAuthor = function () {
+                $http.put('@Url.Action("GetAuthors", "Authors")/' + $routeParams.authorId, $scope.author)
+                    .then(function (response) {
+                        $location.path('/authors');
+                    })
+            }
         }]);
-       
+
 </script>

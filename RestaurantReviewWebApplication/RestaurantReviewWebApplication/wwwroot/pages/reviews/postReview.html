@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="/pages/reviews/rating.css">
+</head>
+<body>
+    <form>
+        <div class="form-group row">
+            <fieldset class="rating">
+                <legend>Please rate:</legend>
+                <input type="radio" id="star5" name="rating" value="5" /><label for="star5">5 stars</label>
+                <input type="radio" id="star4" name="rating" value="4"/><label for="star4">4 stars</label>
+                <input type="radio" id="star3" name="rating" value="3" /><label for="star3">3 stars</label>
+                <input type="radio" id="star2" name="rating" value="2" /><label for="star2">2 stars</label>
+                <input type="radio" id="star1" name="rating" value="1" /><label for="star1">1 star</label>
+            </fieldset>
+        </div>       
+        <div class="form-group row">
+            <label for="content" class="col-sm-2 col-form-label">Your opinion</label>
+            <div class="col-7">
+                <input type="text" class="form-control" placeholder="Please, enter the review text" ng-model="review.content" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="authorId" class="col-sm-2 col-form-label">Review By</label>
+            <div class="col-7">
+                <select class="form-control"
+                        ng-options="author.id as author.fullName for author in authors"
+                        ng-model="review.authorId">
+                    <option value="">Find yourself</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="wouldRecommend" class="col-sm-2 col-form-label">Would Recommend</label>
+            <div class="col-7">
+                <input type="checkbox" data-val="true" ng-model="review.wouldRecommend" data-val-required="The IsChecked field is required." id="IsChecked" name="IsChecked" value="true">
+                <input name="IsChecked" type="hidden" value="false">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="dateAdded" class="col-sm-2 col-form-label">Date Added</label>
+            <div class="col-7">
+                <input type="text" class="form-control" ng-model="review.dateAdded" />[ex: 2021-01-21]
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <input type="submit" value="Add review" class="btn btn-primary" ng-click="PostReview()" />
+            </div>
+        </div>
+    </form>
+
+
+</body>
+</html>
+

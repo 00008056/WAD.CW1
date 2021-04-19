@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +19,10 @@ namespace RestaurantReviewWebApplication.Controllers
     public class RestaurantsController : ControllerBase
     {
         private readonly IRepository<Restaurant> _restaurantRepo;
-
+       
         public RestaurantsController(IRepository<Restaurant> restaurantRepo)
         {
-            _restaurantRepo = restaurantRepo;
+            _restaurantRepo = restaurantRepo;            
         }
 
         // GET: api/Restaurants
@@ -127,6 +128,13 @@ namespace RestaurantReviewWebApplication.Controllers
             return restaurant;
         }
 
-      
+       
+
+
+
+
     }
-}
+        
+
+    }
+

@@ -1,0 +1,19 @@
+﻿<p>
+    <a href="#!/addReview" class="btn btn-primary">Add Review</a>
+</p>
+<table class="table">
+    <tbod>
+        <tr ng-repeat="review in reviews">
+
+            <td>{{review.rating}}</td>
+            <td>{{review.content}}</td>
+            <td>{{review.authorId}}</td>
+            <td>{{review.wouldRecommend}}</td>
+            <td>{{review.dateAdded}}</td>         
+           
+            <td>
+                <a class="badge badge-danger" ng-click="Delete(review)">Delete</a>
+            </td>
+        </tr>
+    </tbod>
+</table>

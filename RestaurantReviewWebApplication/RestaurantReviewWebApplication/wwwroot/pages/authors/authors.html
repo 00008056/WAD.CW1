@@ -1,0 +1,26 @@
+﻿<p>
+    <a href="#!/addAuthor" class="btn btn-primary">Become an author</a>
+</p>
+<table class="table">
+    <tbod>
+        <tr ng-repeat="author in authors">
+
+            <td>
+                {{author.fullName}}
+            </td>
+            <td>
+                {{author.email}}
+            </td>
+            <td>
+                {{author.briefInfo}}
+            </td>
+            <td>
+                <a href="#!/editAuthor/{{author.id}}">Edit</a>
+            </td>
+            <td>
+                <a class="badge badge-danger" ng-click="Delete(author)">Delete</a>
+            </td>
+        </tr>
+    </tbod>
+</table>
+

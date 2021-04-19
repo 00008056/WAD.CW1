@@ -2,6 +2,7 @@
 using RestaurantReviewWebApplication.DAL.DBO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace RestaurantReviewWebApplication.DAL.Repositories
 {
     public class RestaurantRepository : BaseRepository, IRepository<Restaurant>
     {
+        
         public RestaurantRepository(RestaurantReviewWebApplicationDbContext context) : base(context)
         {
 
@@ -41,6 +43,7 @@ namespace RestaurantReviewWebApplication.DAL.Repositories
 
         public async Task<Restaurant> GetById(int id)
         {
+                               
             return await _context.Restaurants.FindAsync(id);
         }
 
@@ -49,5 +52,6 @@ namespace RestaurantReviewWebApplication.DAL.Repositories
             _context.Update(entity);
             await _context.SaveChangesAsync();
         }
+    
     }
 }

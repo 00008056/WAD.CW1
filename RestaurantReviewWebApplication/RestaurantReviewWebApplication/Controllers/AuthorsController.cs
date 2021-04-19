@@ -33,14 +33,14 @@ namespace RestaurantReviewWebApplication.Controllers
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
             //return await _context.Authors.ToListAsync();
-            var authors =  await _authorRepo.GetAll();
-            return Ok(authors.Select(a => new AuthorDTO
-            {
-               
-                FullName = a.FullName,
-                Email = a.Email,
-                BriefInfo = a.BriefInfo
-            }));
+            return await _authorRepo.GetAll();
+            //return Ok(authors.Select(a => new AuthorDTO
+            //{
+            //    Id = a.Id,
+            //    FullName = a.FullName,
+            //    Email = a.Email,
+            //    BriefInfo = a.BriefInfo
+            //}));
 
 
         }
