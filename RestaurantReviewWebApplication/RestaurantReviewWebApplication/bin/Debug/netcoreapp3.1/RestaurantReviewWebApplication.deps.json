@@ -2396,6 +2396,7 @@
       },
       "RestaurantReviewWebApplication.DAL/1.0.0": {
         "dependencies": {
+          "Microsoft.Data.Sqlite.Core": "3.1.13",
           "Microsoft.EntityFrameworkCore": "3.1.13",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.13"
         },

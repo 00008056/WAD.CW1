@@ -22,7 +22,7 @@
                     controller: 'ReviewsController'
                 })
                 .when('/restaurants', {
-                    templateUrl: 'pages/restaurants.html',
+                    templateUrl: 'pages/restaurants/restaurants.html',
                     controller: 'RestaurantsController'
                 })
                 .when('/authors', {
@@ -116,8 +116,9 @@
             $scope.authors = [];
             $scope.review = {
                 id: 0,
+                rating: 0,
                 content: '',
-                authorId: '',
+                authorId: null,
                 wouldRecommend: '',
                 dateAdded: ''
             };

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -26,8 +27,9 @@ namespace RestaurantReviewWebApplication.DAL.DBO
         [Required]
         public DateTime DateAdded { get; set; }
 
+        [JsonIgnore]
         public virtual Restaurant Restaurant { get; set; }
-
+        [JsonIgnore]
         public virtual Author Author { get; set; }
     }
 }

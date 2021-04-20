@@ -1,0 +1,17 @@
+﻿
+<table class="table">
+    <tbod>
+        <tr ng-repeat="restaurant in restaurants">
+
+            <td>{{restaurant.Name}}</td>
+            <td>{{restaurant.Image}}</td>
+            <td>{{restaurant.authorId}}</td>
+            <td>{{restaurant.wouldRecommend}}</td>
+            <td>{{restaurant.dateAdded}}</td>
+
+            <td>
+                <a class="badge badge-danger" ng-click="Delete(review)">Delete</a>
+            </td>
+        </tr>
+    </tbod>
+</table>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -19,10 +20,12 @@ namespace RestaurantReviewWebApplication.Controllers
     public class RestaurantsController : ControllerBase
     {
         private readonly IRepository<Restaurant> _restaurantRepo;
-       
-        public RestaurantsController(IRepository<Restaurant> restaurantRepo)
+        private readonly IHostingEnvironment _environment;
+
+        public RestaurantsController(IRepository<Restaurant> restaurantRepo, IHostingEnvironment environment)
         {
-            _restaurantRepo = restaurantRepo;            
+            _restaurantRepo = restaurantRepo;
+            _environment = environment;
         }
 
         // GET: api/Restaurants
@@ -34,7 +37,7 @@ namespace RestaurantReviewWebApplication.Controllers
             return Ok(restaurants.Select(r => new RestaurantListDTO
             {           
                 Name = r.Name,
-                Image = r.Image
+               
             })); 
         }
 
@@ -90,7 +93,7 @@ namespace RestaurantReviewWebApplication.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Restaurant>> PostRestaurant(Restaurant restaurant)
+        public async Task<ActionResult<Restaurant>> PostRestaurant(Restaurant restaurant/*, [FromForm] RestaurantListDTO rest*/)
         {
             //_context.Restaurants.Add(restaurant);
             //await _context.SaveChangesAsync();
@@ -98,6 +101,13 @@ namespace RestaurantReviewWebApplication.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            //var filePath = Path.Combine(_environment.ContentRootPath, @"Uploads", restaurant.Image.FileName);
+
+            //using (var stream = new FileStream(filePath, FileMode.Create))
+            //{
+            //    await rest.Image.CopyToAsync(stream);
+            //}
 
             await _restaurantRepo.Create(restaurant);
 

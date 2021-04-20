@@ -35,12 +35,15 @@ namespace RestaurantReviewWebApplication.DAL.Repositories
 
         public async Task<List<Review>> GetAll()
         {
-            return await _context.Reviews.Include(r => r.Author).ToListAsync();
+            return await _context.Reviews.Include(a => a.Author).Include(r => r.Restaurant).ToListAsync();
         }
 
         public async Task<Review> GetById(int id)
         {
-            return await _context.Reviews.FindAsync(id);
+            return await _context.Reviews
+                .Include(c => c.Author)
+                .Include(d => d.Restaurant)
+                .FirstOrDefaultAsync(c => c.Id == id);       
         }
 
         public async Task Update(Review entity)

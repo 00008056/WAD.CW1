@@ -1,4 +1,5 @@
 ﻿
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,8 +16,8 @@ namespace RestaurantReviewWebApplication.DAL.DBO
         [Required]
         public string Name { get; set; }
 
-        [Required]
-        public byte[] Image { get; set; }
+       
+        public string Image { get; set; }
 
         [Required]
         public Category Category { get; set; }
@@ -30,6 +31,7 @@ namespace RestaurantReviewWebApplication.DAL.DBO
 
         public string Website { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Review> Reviews { get; set; }
     }
 
